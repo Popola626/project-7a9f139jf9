@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gephi Network Graph Example</title>
+  <style>
+    html, body, #graph-container {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+  <script src="https://unpkg.com/sigma@2.3.0/build/sigma.min.js"></script>
+</head>
+<body>
+  <div id="graph-container"></div>
+
+  <script>
+    // Sample graph data (can also be loaded from a JSON or GEXF file)
+    const graph = {
+      nodes: [
+        { id: "A", label: "Lorem", x: 0, y: 0, size: 10, color: "#FF5733" },
+        { id: "B", label: "Ipsum", x: 3, y: 1, size: 8, color: "#33C1FF" },
+        { id: "C", label: "Dolor", x: -2, y: 2, size: 6, color: "#8D33FF" },
+        { id: "D", label: "Sit", x: 1, y: -3, size: 7, color: "#33FF57" },
+        { id: "E", label: "Amet", x: -3, y: -2, size: 5, color: "#FFC733" }
+      ],
+      edges: [
+        { id: "e1", source: "A", target: "B" },
+        { id: "e2", source: "A", target: "C" },
+        { id: "e3", source: "B", target: "D" },
+        { id: "e4", source: "C", target: "E" },
+        { id: "e5", source: "D", target: "E" }
+      ]
+    };
+
+    // Initialize Sigma
+    const container = document.getElementById("graph-container");
+    const renderer = new sigma.Sigma(graph, container);
+  </script>
+</body>
+</html>
