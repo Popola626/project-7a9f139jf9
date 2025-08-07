@@ -11,49 +11,49 @@
       height: 100%;
     }
   </style>
-  <!-- Include Sigma.js v2 and Graphology -->
-  <script src="https://cdn.jsdelivr.net/npm/graphology@0.25.1/dist/graphology.umd.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sigma@2.3.0/build/sigma.min.js"></script>
 </head>
 <body>
   <div id="graph-container"></div>
 
+  <!-- Load Graphology and Sigma.js first -->
+  <script src="https://cdn.jsdelivr.net/npm/graphology@0.25.1/dist/graphology.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sigma@2.3.0/build/sigma.min.js"></script>
+
   <script>
-    // Create a simple graph
-    const graph = new graphology.Graph();
+    // Wait until both libraries are loaded
+    window.addEventListener('DOMContentLoaded', () => {
+      const graph = new graphology.Graph();
 
-    // Add some nodes with positions
-    graph.addNode('1', {
-      label: 'Lorem',
-      x: 0,
-      y: 0,
-      size: 10,
-      color: '#FF5733'
+      graph.addNode('1', {
+        label: 'Lorem',
+        x: 0,
+        y: 0,
+        size: 10,
+        color: '#FF5733'
+      });
+
+      graph.addNode('2', {
+        label: 'Ipsum',
+        x: 1,
+        y: 1,
+        size: 8,
+        color: '#33C1FF'
+      });
+
+      graph.addNode('3', {
+        label: 'Dolor',
+        x: -1,
+        y: 1,
+        size: 8,
+        color: '#33FF57'
+      });
+
+      graph.addEdge('1', '2');
+      graph.addEdge('1', '3');
+
+      const container = document.getElementById('graph-container');
+      new sigma.Sigma(graph, container);
     });
-
-    graph.addNode('2', {
-      label: 'Ipsum',
-      x: 1,
-      y: 1,
-      size: 8,
-      color: '#33C1FF'
-    });
-
-    graph.addNode('3', {
-      label: 'Dolor',
-      x: -1,
-      y: 1,
-      size: 8,
-      color: '#33FF57'
-    });
-
-    // Add edges between nodes
-    graph.addEdge('1', '2');
-    graph.addEdge('1', '3');
-
-    // Render with Sigma
-    const container = document.getElementById('graph-container');
-    const renderer = new sigma.Sigma(graph, container);
   </script>
 </body>
 </html>
