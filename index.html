@@ -15,12 +15,11 @@
 <body>
   <div id="graph-container"></div>
 
-  <!-- Load Graphology and Sigma.js first -->
+  <!-- Load Graphology and Sigma.js -->
   <script src="https://cdn.jsdelivr.net/npm/graphology@0.25.1/dist/graphology.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sigma@2.3.0/build/sigma.min.js"></script>
 
   <script>
-    // Wait until both libraries are loaded
     window.addEventListener('DOMContentLoaded', () => {
       const graph = new graphology.Graph();
 
@@ -52,7 +51,7 @@
       graph.addEdge('1', '3');
 
       const container = document.getElementById('graph-container');
-      new sigma.Sigma(graph, container);
+      new Sigma(graph, container); // ✅ NOT sigma.Sigma
     });
   </script>
 </body>
