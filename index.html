@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Network Graph Example</title>
+  <title>Network Graph with Descriptions</title>
   <style>
     html, body, #graph-container {
       margin: 0;
@@ -10,12 +10,24 @@
       width: 100%;
       height: 100%;
     }
+    #info-box {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: white;
+      padding: 10px;
+      border: 1px solid #ccc;
+      font-family: sans-serif;
+      font-size: 14px;
+      display: none;
+      z-index: 1000;
+    }
   </style>
 </head>
 <body>
   <div id="graph-container"></div>
+  <div id="info-box"></div>
 
-  <!-- Load Graphology and Sigma.js -->
   <script src="https://cdn.jsdelivr.net/npm/graphology@0.25.1/dist/graphology.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sigma@2.3.0/build/sigma.min.js"></script>
 
@@ -23,12 +35,14 @@
     window.addEventListener('DOMContentLoaded', () => {
       const graph = new graphology.Graph();
 
+      // Add nodes with descriptions
       graph.addNode('1', {
         label: 'Lorem',
         x: 0,
         y: 0,
         size: 10,
-        color: '#FF5733'
+        color: '#FF5733',
+        description: 'Lorem is the root node of the network.'
       });
 
       graph.addNode('2', {
@@ -36,7 +50,8 @@
         x: 1,
         y: 1,
         size: 8,
-        color: '#33C1FF'
+        color: '#33C1FF',
+        description: 'Ipsum is connected to Lorem and represents a secondary entity.'
       });
 
       graph.addNode('3', {
@@ -44,14 +59,30 @@
         x: -1,
         y: 1,
         size: 8,
-        color: '#33FF57'
+        color: '#33FF57',
+        description: 'Dolor connects back to Lorem and completes the triad.'
       });
 
+      // Add edges
       graph.addEdge('1', '2');
       graph.addEdge('1', '3');
 
       const container = document.getElementById('graph-container');
-      new Sigma(graph, container); // ✅ NOT sigma.Sigma
+      const infoBox = document.getElementById('info-box');
+
+      const renderer = new Sigma(graph, container);
+
+      // Click event to show node descriptions
+      renderer.on('clickNode', ({ node }) => {
+        const data = graph.getNodeAttributes(node);
+        infoBox.innerHTML = `<strong>${data.label}</strong><br>${data.description}`;
+        infoBox.style.display = 'block';
+      });
+
+      // Click on empty space hides the box
+      renderer.on('clickStage', () => {
+        infoBox.style.display = 'none';
+      });
     });
   </script>
 </body>
